@@ -1,7 +1,11 @@
 package com.example.fashionshop.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "order_items")
 public class OrderItem {

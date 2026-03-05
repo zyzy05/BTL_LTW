@@ -1,8 +1,12 @@
 package com.example.fashionshop.entity;
 
 import jakarta.persistence.*;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.List;
+@Getter
+@Setter
 @Entity
 @Table(name = "sizes")
 public class Size {

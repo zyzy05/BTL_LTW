@@ -3,8 +3,12 @@ package com.example.fashionshop.entity;
 import com.example.fashionshop.entity.enums.Role;
 import com.example.fashionshop.entity.enums.Status;
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.LocalDateTime;
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class User {

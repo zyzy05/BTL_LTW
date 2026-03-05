@@ -1,4 +1,4 @@
 package com.example.fashionshop.repository;
 
-public class PaymentRepository {
+public interface PaymentRepository {
 }

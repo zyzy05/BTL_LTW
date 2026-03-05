@@ -4,9 +4,13 @@ import com.example.fashionshop.entity.enums.OrderStatus;
 import com.example.fashionshop.entity.enums.PaymentMethod;
 import com.example.fashionshop.entity.enums.PaymentStatus;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Getter
+@Setter
 @Entity
 @Table(name = "orders")
 public class Order {
