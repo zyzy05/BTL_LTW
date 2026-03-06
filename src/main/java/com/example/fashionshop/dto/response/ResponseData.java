@@ -8,10 +8,10 @@ import lombok.Setter;
 @Setter
 public class ResponseData {
 
-    private int status;
+    private Integer status;
     private Object data;
     private String description;
-    private boolean success = true;
+    private Boolean success = true;
 
 
 }

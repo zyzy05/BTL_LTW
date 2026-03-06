@@ -6,8 +6,7 @@ import lombok.Setter;
 
 import java.util.List;
 @Getter
-@Setter
-@Entity
+@Setter@Entity
 @Table(name = "sizes")
 public class Size {
 
@@ -18,5 +17,5 @@ public class Size {
     private String name;
 
     @OneToMany(mappedBy = "size")
-    private List<ProductVariant> variants;
+    private List<ProductVariant> productVariants;
 }
