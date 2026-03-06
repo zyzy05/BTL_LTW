@@ -1,4 +1,4 @@
-package com.example.fashionshop.dto.response;
+package com.example.fashionshop.dto.response.products;
 
 
 import lombok.Getter;

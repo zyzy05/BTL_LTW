@@ -1,10 +1,10 @@
 package com.example.fashionshop.service;
 
 
-import com.example.fashionshop.dto.response.ProductImageResponse;
-import com.example.fashionshop.dto.response.ProductVariantResponse;
-import com.example.fashionshop.dto.response.ProductsResponse;
-import com.example.fashionshop.dto.response.SizeResponse;
+import com.example.fashionshop.dto.response.products.ProductImageResponse;
+import com.example.fashionshop.dto.response.products.ProductVariantResponse;
+import com.example.fashionshop.dto.response.products.ProductsResponse;
+import com.example.fashionshop.dto.response.products.SizeResponse;
 import com.example.fashionshop.entity.Product;
 import com.example.fashionshop.entity.ProductImage;
 import com.example.fashionshop.entity.ProductVariant;

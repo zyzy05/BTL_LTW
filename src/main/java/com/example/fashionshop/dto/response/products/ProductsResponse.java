@@ -1,8 +1,6 @@
-package com.example.fashionshop.dto.response;
+package com.example.fashionshop.dto.response.products;
 
 
-import com.example.fashionshop.entity.ProductImage;
-import com.example.fashionshop.entity.ProductVariant;
 import lombok.Getter;
 import lombok.Setter;
 
