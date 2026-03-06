@@ -6,7 +6,8 @@ import lombok.Setter;
 
 import java.util.List;
 @Getter
-@Setter@Entity
+@Setter
+@Entity
 @Table(name = "sizes")
 public class Size {
 
