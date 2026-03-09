@@ -33,7 +33,7 @@ public class ProductController {
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 
-    // loc san pham
+    // loc san pham theo muc gia
 
     @GetMapping("/products/filter")
     public ResponseEntity<?> filterPrice (@RequestParam Double minPrice,
@@ -45,5 +45,14 @@ public class ProductController {
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 
+    // tim kiem san pham theo ten
+    @GetMapping("/products/search")
+    public ResponseEntity<?> filterName (@RequestParam String name )
+    {
+
+        ResponseData responseData = new ResponseData();
+        responseData.setData(productService.filterName(name));
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
 
 }
