@@ -14,5 +14,5 @@ public class UserDTO {
     private String password;
     private String fullName;
     private String phone;
-    private Address address;
+    private AddressDTO addressDTO;
 }

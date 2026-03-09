@@ -11,6 +11,8 @@ import com.example.fashionshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -65,6 +67,32 @@ public class UserService {
         userRepository.save(user);
 
         return true;
+    }
+
+
+    // lay full thong tin user
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserDTO> userDTOs = new ArrayList<>();
+        for (User user : users) {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setUsername(user.getUsername());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setFullName(user.getFullName());
+            userDTO.setPhone(user.getPhone());
+            Address address = user.getAddress();
+            AddressDTO addressDTO = new AddressDTO();
+            addressDTO.setId(address.getId());
+            addressDTO.setDistrict(address.getDistrict());
+            addressDTO.setCity(address.getCity());
+            addressDTO.setWard(address.getWard());
+            addressDTO.setAddressLine(address.getAddressLine());
+            userDTO.setAddressDTO(addressDTO);
+            userDTOs.add(userDTO);
+
+        }
+        return userDTOs;
     }
 
 }
