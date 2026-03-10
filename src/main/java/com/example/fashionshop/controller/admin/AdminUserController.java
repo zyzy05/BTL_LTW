@@ -7,9 +7,7 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -24,5 +22,15 @@ public class AdminUserController {
         ResponseData responseData = new ResponseData();
         responseData.setData(userService.getAllUsers());
         return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
+    // xoa user
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable long id) {
+        ResponseData responseData = new ResponseData();
+        responseData.setSuccess(userService.deleteUser(id));
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+
     }
 }

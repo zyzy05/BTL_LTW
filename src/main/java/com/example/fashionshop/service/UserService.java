@@ -7,8 +7,10 @@ import com.example.fashionshop.dto.request.user.ChangePasswordRequest;
 import com.example.fashionshop.dto.request.user.UpdateUserRequest;
 import com.example.fashionshop.entity.Address;
 import com.example.fashionshop.entity.User;
+import com.example.fashionshop.repository.AddressRepository;
 import com.example.fashionshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AddressRepository addressRepository;
     // câp nhat thong tin ca nhan va dia chi
     public boolean updateUser(long id , UpdateUserRequest request) {
         User user = userRepository.findById(id).orElse(null);
@@ -93,6 +97,24 @@ public class UserService {
 
         }
         return userDTOs;
+    }
+
+    // xoa user
+    public boolean deleteUser(long id) {
+        User user = userRepository.findById(id).orElse(null);
+
+        if (user == null) {
+            return false;
+        }
+
+        if (user.getRole().name().equals("ADMIN")) {
+            return false;
+        }
+
+        userRepository.delete(user);
+
+        return true;
+
     }
 
 }

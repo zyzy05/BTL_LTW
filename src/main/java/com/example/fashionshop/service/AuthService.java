@@ -29,15 +29,17 @@ public class AuthService {
         user.setPhone(registerRequest.getPhone());
         user.setRole(Role.CUSTOMER);
         user.setStatus(Status.ACTIVE);
-        userRepository.save(user);
 
         Address address = new Address();
-        address.setUser(user);
         address.setAddressLine(registerRequest.getAddressLine());
         address.setCity(registerRequest.getCity());
         address.setWard(registerRequest.getWard());
         address.setDistrict(registerRequest.getDistrict());
+
+        address.setUser(user);
+        user.setAddress(address);
         addressRepository.save(address);
+        userRepository.save(user);
 
         return true;
 
