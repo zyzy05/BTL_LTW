@@ -92,7 +92,7 @@ public class UserService {
             addressDTO.setCity(address.getCity());
             addressDTO.setWard(address.getWard());
             addressDTO.setAddressLine(address.getAddressLine());
-            userDTO.setAddressDTO(addressDTO);
+            userDTO.setAddress(addressDTO);
             userDTOs.add(userDTO);
 
         }
