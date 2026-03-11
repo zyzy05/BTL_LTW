@@ -135,4 +135,20 @@ public class OrderService {
         }
         return orderDTO;
     }
+
+    // xoa don hang
+    public boolean deleteOrderById(long id) {
+
+        try
+        {
+            orderRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+
 }
