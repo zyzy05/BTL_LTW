@@ -7,10 +7,12 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin")
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminUserController {
 
     @Autowired
@@ -33,4 +35,23 @@ public class AdminUserController {
         return new ResponseEntity<>(responseData, HttpStatus.OK);
 
     }
+
+    // khoa tai khoan
+    @PatchMapping("/users/{id}/ban")
+    public ResponseEntity<?> banUser(@PathVariable long id) {
+
+        ResponseData responseData = new ResponseData();
+        responseData.setSuccess(userService.banUser(id));
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
+    // mo khoa tai khoan
+    @PatchMapping("/users/{id}/unban")
+    public ResponseEntity<?> unBanUser(@PathVariable long id) {
+
+        ResponseData responseData = new ResponseData();
+        responseData.setSuccess(userService.unBanUser(id));
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
 }

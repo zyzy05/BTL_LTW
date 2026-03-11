@@ -7,6 +7,7 @@ import com.example.fashionshop.dto.request.user.ChangePasswordRequest;
 import com.example.fashionshop.dto.request.user.UpdateUserRequest;
 import com.example.fashionshop.entity.Address;
 import com.example.fashionshop.entity.User;
+import com.example.fashionshop.entity.enums.Status;
 import com.example.fashionshop.repository.AddressRepository;
 import com.example.fashionshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,5 +117,38 @@ public class UserService {
         return true;
 
     }
+
+    // khoa tai khoan
+    public boolean banUser(long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user.getRole().name().equals("ADMIN")) {
+            return false;
+        }
+        user.setStatus(Status.LOCKED);
+        try
+        {
+            userRepository.save(user);
+            return true;
+        }
+        catch (EmptyResultDataAccessException e)
+        {
+            return false;
+        }
+    }
+    // mo khoa tai khoan
+    public boolean unBanUser(long id) {
+        User user = userRepository.findById(id).orElse(null);
+        user.setStatus(Status.ACTIVE);
+        try
+        {
+            userRepository.save(user);
+            return true;
+        }
+        catch (EmptyResultDataAccessException e)
+        {
+            return false;
+        }
+    }
+
 
 }

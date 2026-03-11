@@ -1,8 +1,8 @@
 package com.example.fashionshop.config;
 
 import com.example.fashionshop.entity.User;
+import com.example.fashionshop.entity.enums.Status;
 import com.example.fashionshop.repository.UserRepository;
-import com.example.fashionshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,12 +10,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
-
 
     @Autowired
     private UserRepository userRepository;
@@ -23,8 +21,20 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if (user == null) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException("User not found: " + username);
         }
-        return new org.springframework.security.core.userdetails.User(username ,"{noop}" + user.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name())));
+
+        boolean enabled = user.getStatus() == Status.ACTIVE;
+        boolean accountNonLocked = user.getStatus() != Status.LOCKED;
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                "{noop}" + user.getPassword(),
+                enabled,
+                true,
+                true,
+                accountNonLocked,
+                List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()))
+        );
     }
 }
