@@ -1,37 +1,19 @@
-use fashion_shop;
--- =====================================
+USE fashion_shop;
+
 -- USERS
--- =====================================
-INSERT INTO users (username,email,password,full_name,phone,role,status) VALUES
-('admin','admin@gmail.com','123456','Admin','0900000001','ADMIN','ACTIVE'),
-('user1','user1@gmail.com','123456','Nguyen Van A','0900000002','CUSTOMER','ACTIVE'),
-('user2','user2@gmail.com','123456','Nguyen Van B','0900000003','CUSTOMER','ACTIVE'),
-('user3','user3@gmail.com','123456','Nguyen Van C','0900000004','CUSTOMER','ACTIVE'),
-('user4','user4@gmail.com','123456','Nguyen Van D','0900000005','CUSTOMER','ACTIVE'),
-('user5','user5@gmail.com','123456','Nguyen Van E','0900000006','CUSTOMER','ACTIVE'),
-('user6','user6@gmail.com','123456','Nguyen Van F','0900000007','CUSTOMER','ACTIVE'),
-('user7','user7@gmail.com','123456','Nguyen Van G','0900000008','CUSTOMER','ACTIVE'),
-('user8','user8@gmail.com','123456','Nguyen Van H','0900000009','CUSTOMER','ACTIVE'),
-('user9','user9@gmail.com','123456','Nguyen Van I','0900000010','CUSTOMER','ACTIVE');
+INSERT INTO users (username,email,password,full_name,phone,role,status,created_at) VALUES
+('admin','admin@gmail.com','123456','Admin','0900000001','ADMIN','ACTIVE',NOW()),
+('user1','user1@gmail.com','123456','Nguyen Van A','0900000002','CUSTOMER','ACTIVE',NOW()),
+('user2','user2@gmail.com','123456','Nguyen Van B','0900000003','CUSTOMER','ACTIVE',NOW()),
+('user3','user3@gmail.com','123456','Nguyen Van C','0900000004','CUSTOMER','ACTIVE',NOW()),
+('user4','user4@gmail.com','123456','Nguyen Van D','0900000005','CUSTOMER','ACTIVE',NOW()),
+('user5','user5@gmail.com','123456','Nguyen Van E','0900000006','CUSTOMER','ACTIVE',NOW()),
+('user6','user6@gmail.com','123456','Nguyen Van F','0900000007','CUSTOMER','ACTIVE',NOW()),
+('user7','user7@gmail.com','123456','Nguyen Van G','0900000008','CUSTOMER','ACTIVE',NOW()),
+('user8','user8@gmail.com','123456','Nguyen Van H','0900000009','CUSTOMER','ACTIVE',NOW()),
+('user9','user9@gmail.com','123456','Nguyen Van I','0900000010','CUSTOMER','ACTIVE',NOW());
 
--- =====================================
--- ADDRESSES
--- =====================================
-INSERT INTO addresses (user_id,address_line,city,district,ward) VALUES
-(1,'12 Nguyen Trai','HCM','Quan 1','Ben Thanh'),
-(2,'45 Le Loi','HCM','Quan 1','Ben Nghe'),
-(3,'78 Hai Ba Trung','HCM','Quan 3','Vo Thi Sau'),
-(4,'99 Tran Hung Dao','HCM','Quan 5','Ward 5'),
-(5,'15 Phan Xich Long','HCM','Phu Nhuan','Ward 2'),
-(6,'22 Dien Bien Phu','HCM','Binh Thanh','Ward 15'),
-(7,'56 Nguyen Van Cu','HCM','Quan 5','Ward 2'),
-(8,'88 Cach Mang Thang 8','HCM','Quan 10','Ward 10'),
-(9,'120 Hoang Van Thu','HCM','Tan Binh','Ward 4'),
-(10,'200 Cong Hoa','HCM','Tan Binh','Ward 13');
-
--- =====================================
 -- CATEGORIES
--- =====================================
 INSERT INTO categories (name,description) VALUES
 ('Quan','Tat ca cac loai quan'),
 ('Ao','Tat ca cac loai ao'),
@@ -44,24 +26,25 @@ INSERT INTO categories (name,description) VALUES
 ('Ao thun','Ao thun nam nu'),
 ('Tui xach','Tui xach thoi trang');
 
--- =====================================
--- PRODUCTS
--- =====================================
-INSERT INTO products (name,description,price,category_id) VALUES
-('Quan dui nam','Quan dui the thao',120000,1),
-('Quan jean nam','Quan jean dep',350000,8),
-('Ao thun nam','Ao thun cotton',150000,9),
-('Ao khoac hoodie','Ao khoac hoodie am',400000,6),
-('Giay sneaker','Giay sneaker thoi trang',600000,3),
-('Dep sandal','Dep sandal nam',200000,4),
-('Ao the thao','Ao mac tap gym',180000,7),
-('Quan tay','Quan tay cong so',320000,1),
-('Tui deo cheo','Tui deo cheo nho',250000,10),
-('Ao so mi','Ao so mi cong so',280000,2);
+-- SIZES
+INSERT INTO sizes (name) VALUES
+('S'),('M'),('L'),('XL'),('XXL'),
+('28'),('29'),('30'),('31'),('32');
 
--- =====================================
+-- PRODUCTS
+INSERT INTO products (name,description,price,category_id,created_at) VALUES
+('Quan dui nam','Quan dui the thao',120000,1,NOW()),
+('Quan jean nam','Quan jean dep',350000,8,NOW()),
+('Ao thun nam','Ao thun cotton',150000,9,NOW()),
+('Ao khoac hoodie','Ao khoac hoodie am',400000,6,NOW()),
+('Giay sneaker','Giay sneaker thoi trang',600000,3,NOW()),
+('Dep sandal','Dep sandal nam',200000,4,NOW()),
+('Ao the thao','Ao mac tap gym',180000,7,NOW()),
+('Quan tay','Quan tay cong so',320000,1,NOW()),
+('Tui deo cheo','Tui deo cheo nho',250000,10,NOW()),
+('Ao so mi','Ao so mi cong so',280000,2,NOW());
+
 -- PRODUCT IMAGES
--- =====================================
 INSERT INTO product_images (product_id,image_url,is_main) VALUES
 (1,'quan1.jpg',true),
 (2,'quan2.jpg',true),
@@ -74,24 +57,7 @@ INSERT INTO product_images (product_id,image_url,is_main) VALUES
 (9,'tui.jpg',true),
 (10,'aosomi.jpg',true);
 
--- =====================================
--- SIZES
--- =====================================
-INSERT INTO sizes (name) VALUES
-('S'),
-('M'),
-('L'),
-('XL'),
-('XXL'),
-('28'),
-('29'),
-('30'),
-('31'),
-('32');
-
--- =====================================
 -- PRODUCT VARIANTS
--- =====================================
 INSERT INTO product_variants (product_id,size_id,stock_quantity) VALUES
 (1,2,50),
 (1,3,40),
@@ -104,15 +70,25 @@ INSERT INTO product_variants (product_id,size_id,stock_quantity) VALUES
 (6,2,45),
 (7,3,35);
 
--- =====================================
--- CARTS
--- =====================================
-INSERT INTO carts (user_id) VALUES
-(1),(2),(3),(4),(5),(6),(7),(8),(9),(10);
+-- ADDRESSES
+INSERT INTO addresses (user_id,address_line,city,district,ward) VALUES
+(1,'12 Nguyen Trai','HCM','Quan 1','Ben Thanh'),
+(2,'45 Le Loi','HCM','Quan 1','Ben Nghe'),
+(3,'78 Hai Ba Trung','HCM','Quan 3','Vo Thi Sau'),
+(4,'99 Tran Hung Dao','HCM','Quan 5','Ward 5'),
+(5,'15 Phan Xich Long','HCM','Phu Nhuan','Ward 2'),
+(6,'22 Dien Bien Phu','HCM','Binh Thanh','Ward 15'),
+(7,'56 Nguyen Van Cu','HCM','Quan 5','Ward 2'),
+(8,'88 Cach Mang Thang 8','HCM','Quan 10','Ward 10'),
+(9,'120 Hoang Van Thu','HCM','Tan Binh','Ward 4'),
+(10,'200 Cong Hoa','HCM','Tan Binh','Ward 13');
 
--- =====================================
+-- CARTS
+INSERT INTO carts (user_id,created_at) VALUES
+(1,NOW()),(2,NOW()),(3,NOW()),(4,NOW()),(5,NOW()),
+(6,NOW()),(7,NOW()),(8,NOW()),(9,NOW()),(10,NOW());
+
 -- CART ITEMS
--- =====================================
 INSERT INTO cart_items (cart_id,product_variant_id,quantity) VALUES
 (1,1,2),
 (2,2,1),
@@ -125,24 +101,20 @@ INSERT INTO cart_items (cart_id,product_variant_id,quantity) VALUES
 (9,9,2),
 (10,10,1);
 
--- =====================================
 -- ORDERS
--- =====================================
-INSERT INTO orders (user_id,total_price,status,payment_method,payment_status,shipping_name,shipping_phone,shipping_address) VALUES
-(1,240000,'PENDING','COD','PENDING','Nguyen Van A','0900000002','HCM'),
-(2,350000,'CONFIRMED','COD','PAID','Nguyen Van B','0900000003','HCM'),
-(3,150000,'SHIPPING','COD','PAID','Nguyen Van C','0900000004','HCM'),
-(4,400000,'COMPLETED','COD','PAID','Nguyen Van D','0900000005','HCM'),
-(5,600000,'PENDING','COD','PENDING','Nguyen Van E','0900000006','HCM'),
-(6,200000,'CONFIRMED','COD','PAID','Nguyen Van F','0900000007','HCM'),
-(7,180000,'SHIPPING','COD','PAID','Nguyen Van G','0900000008','HCM'),
-(8,320000,'PENDING','COD','PENDING','Nguyen Van H','0900000009','HCM'),
-(9,250000,'COMPLETED','COD','PAID','Nguyen Van I','0900000010','HCM'),
-(10,280000,'CONFIRMED','COD','PAID','Nguyen Van K','0900000011','HCM');
+INSERT INTO orders (user_id,total_price,status,payment_method,payment_status,shipping_name,shipping_phone,shipping_address,created_at) VALUES
+(1,240000,'PENDING','COD','PENDING','Nguyen Van A','0900000002','HCM',NOW()),
+(2,350000,'CONFIRMED','COD','PAID','Nguyen Van B','0900000003','HCM',NOW()),
+(3,150000,'SHIPPING','COD','PAID','Nguyen Van C','0900000004','HCM',NOW()),
+(4,400000,'COMPLETED','COD','PAID','Nguyen Van D','0900000005','HCM',NOW()),
+(5,600000,'PENDING','COD','PENDING','Nguyen Van E','0900000006','HCM',NOW()),
+(6,200000,'CONFIRMED','COD','PAID','Nguyen Van F','0900000007','HCM',NOW()),
+(7,180000,'SHIPPING','COD','PAID','Nguyen Van G','0900000008','HCM',NOW()),
+(8,320000,'PENDING','COD','PENDING','Nguyen Van H','0900000009','HCM',NOW()),
+(9,250000,'COMPLETED','COD','PAID','Nguyen Van I','0900000010','HCM',NOW()),
+(10,280000,'CONFIRMED','COD','PAID','Nguyen Van I','0900000010','HCM',NOW());
 
--- =====================================
 -- ORDER ITEMS
--- =====================================
 INSERT INTO order_items (order_id,product_variant_id,price,quantity) VALUES
 (1,1,120000,2),
 (2,3,350000,1),
