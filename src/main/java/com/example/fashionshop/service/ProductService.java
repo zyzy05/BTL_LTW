@@ -5,14 +5,13 @@ import com.example.fashionshop.dto.response.products.ProductImageResponse;
 import com.example.fashionshop.dto.response.products.ProductVariantResponse;
 import com.example.fashionshop.dto.response.products.ProductsResponse;
 import com.example.fashionshop.dto.response.products.SizeResponse;
-import com.example.fashionshop.entity.Product;
-import com.example.fashionshop.entity.ProductImage;
-import com.example.fashionshop.entity.ProductVariant;
-import com.example.fashionshop.entity.Size;
+import com.example.fashionshop.entity.*;
+import com.example.fashionshop.repository.CategoryRepository;
 import com.example.fashionshop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +19,8 @@ import java.util.List;
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
     // hiển thi toàn bộ sản phẩm
     public List<ProductsResponse> getAllProducts() {
 
@@ -191,5 +192,64 @@ public class ProductService {
         }
         return productsResponses;
 
+    }
+    // them san pham
+    public boolean addProduct(ProductsResponse productsResponse) {
+        Product product = new Product();
+        product.setName(productsResponse.getName());
+        product.setDescription(productsResponse.getDescription());
+        product.setPrice(productsResponse.getPrice());
+        product.setCreatedAt(LocalDateTime.now());
+
+        Category category = categoryRepository.findById(productsResponse.getCategoryId()).orElse(null);
+
+        product.setCategory(category);
+
+        try
+        {
+            productRepository.save(product);
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+
+    }
+
+    // sua san pham
+    public boolean updateProduct(long id , ProductsResponse productsResponse) {
+        Product product = productRepository.findById(id).orElse(null);
+        product.setName(productsResponse.getName());
+        product.setDescription(productsResponse.getDescription());
+        product.setPrice(productsResponse.getPrice());
+        product.setCreatedAt(LocalDateTime.now());
+
+        Category category = categoryRepository.findById(productsResponse.getCategoryId()).orElse(null);
+
+        product.setCategory(category);
+
+        try
+        {
+            productRepository.save(product);
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+    // xoa san pham
+    public boolean deleteProduct(long id) {
+
+        try
+        {
+            productRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
     }
 }

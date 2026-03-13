@@ -2,6 +2,7 @@ package com.example.fashionshop.controller.admin;
 
 
 import com.example.fashionshop.dto.response.ResponseData;
+import com.example.fashionshop.entity.enums.OrderStatus;
 import com.example.fashionshop.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin")
-@PreAuthorize("hasRole('ADMIN')")
+//@PreAuthorize("hasRole('ADMIN')")
 public class AdminOrderController {
 
     @Autowired
@@ -32,14 +33,29 @@ public class AdminOrderController {
         responseData.setData(orderService.getOrderById(id));
         return new ResponseEntity<>(responseData, HttpStatus.OK) ;
     }
-    // xoa don hang
 
-    @DeleteMapping("/orders/{id}")
-    public ResponseEntity<?> deleteOrderById(@PathVariable long id) {
+    // huy don hang
+
+    @PatchMapping("/orders/{id}/cancel")
+    public ResponseEntity<?> cancelOrder(@PathVariable long id) {
 
         ResponseData responseData = new ResponseData();
-        responseData.setSuccess(orderService.deleteOrderById(id));
+        responseData.setSuccess(orderService.cancelOrder(id));
         return new ResponseEntity<>(responseData, HttpStatus.OK) ;
+    }
+
+
+
+    // cap nhat trang thai don
+
+    @PatchMapping("/orders/{id}/status")
+    public ResponseEntity<?> updateStatusOrder(@PathVariable long id,
+                                               @RequestParam String status) {
+
+        ResponseData responseData = new ResponseData();
+        responseData.setSuccess(orderService.updateStatusOrder(id, status));
+
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 
 }

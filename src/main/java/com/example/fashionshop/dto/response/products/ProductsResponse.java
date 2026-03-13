@@ -14,4 +14,5 @@ public class ProductsResponse {
     private Double price;
     private List<ProductImageResponse> images;
     private List<ProductVariantResponse> productVariants;
+    private long categoryId;
 }

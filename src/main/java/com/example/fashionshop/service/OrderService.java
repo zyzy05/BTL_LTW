@@ -8,6 +8,7 @@ import com.example.fashionshop.dto.UserDTO;
 import com.example.fashionshop.dto.response.products.ProductVariantResponse;
 import com.example.fashionshop.dto.response.products.SizeResponse;
 import com.example.fashionshop.entity.*;
+import com.example.fashionshop.entity.enums.OrderStatus;
 import com.example.fashionshop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -137,20 +138,6 @@ public class OrderService {
         }
         return orderDTO;
     }
-
-    // xoa don hang
-    public boolean deleteOrderById(long id) {
-
-        try
-        {
-            orderRepository.deleteById(id);
-            return true;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }
     // xem chi tiet don hang theo Id cua Customer
     public OrderDTO getOrderByIdCustomer(long id) {
         OrderDTO orderDTO = new OrderDTO();
@@ -199,6 +186,36 @@ public class OrderService {
             orderItemDTOS.add(orderItemDTO);
         }
         return orderDTO;
+    }
+
+    // huy don hang
+    public boolean cancelOrder(long id) {
+
+        Order order = orderRepository.findById(id).orElse(null);
+
+        if(order == null){
+            return false;
+        }
+
+        order.setStatus(OrderStatus.CANCELLED);
+        orderRepository.save(order);
+
+        return true;
+    }
+
+    // cap nhat trang thai don
+    public boolean updateStatusOrder(long id, String status) {
+
+        Order order = orderRepository.findById(id).orElse(null);
+
+        if(order == null){
+            return false;
+        }
+
+        order.setStatus(OrderStatus.valueOf(status));
+        orderRepository.save(order);
+
+        return true;
     }
 
 }
