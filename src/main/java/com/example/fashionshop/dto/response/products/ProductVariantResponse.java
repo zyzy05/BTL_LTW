@@ -8,5 +8,6 @@ import lombok.Setter;
 public class ProductVariantResponse {
     private Long id;
     private Integer stockQuantity;
+    private ProductsResponse productResponse;
     private SizeResponse size;
 }

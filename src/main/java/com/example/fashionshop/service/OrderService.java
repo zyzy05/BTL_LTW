@@ -49,6 +49,7 @@ public class OrderService {
 
             addressDTO.setWard(address.getWard());
             addressDTO.setCity(address.getCity());
+            addressDTO.setDistrict(address.getDistrict());
             addressDTO.setAddressLine(address.getAddressLine());
 
             userDTO.setAddress(addressDTO);
@@ -81,7 +82,7 @@ public class OrderService {
         return request;
     }
 
-    // xem chi tiet don hang theo id
+    // xem chi tiet don hang theo id cua Admin
     public OrderDTO getOrderById(long id) {
         OrderDTO orderDTO = new OrderDTO();
         Order order = orderRepository.findById(id).orElse(null);
@@ -107,6 +108,7 @@ public class OrderService {
 
         addressDTO.setWard(address.getWard());
         addressDTO.setCity(address.getCity());
+        addressDTO.setDistrict(address.getDistrict());
         addressDTO.setAddressLine(address.getAddressLine());
 
         userDTO.setAddress(addressDTO);
@@ -149,6 +151,54 @@ public class OrderService {
             return false;
         }
     }
+    // xem chi tiet don hang theo Id cua Customer
+    public OrderDTO getOrderByIdCustomer(long id) {
+        OrderDTO orderDTO = new OrderDTO();
+        Order order = orderRepository.findById(id).orElse(null);
 
+        orderDTO.setTotalPrice(order.getTotalPrice());
+        orderDTO.setStatus(order.getStatus());
+        orderDTO.setPaymentMethod(order.getPaymentMethod());
+        orderDTO.setPaymentStatus(order.getPaymentStatus());
+        orderDTO.setShippingName(order.getShippingName());
+        orderDTO.setShippingAddress(order.getShippingAddress());
+
+        User user = order.getUser();
+
+        UserDTO userDTO = new UserDTO();
+
+        Address address = user.getAddress();
+        AddressDTO addressDTO = new AddressDTO();
+
+        addressDTO.setWard(address.getWard());
+        addressDTO.setCity(address.getCity());
+        addressDTO.setDistrict(address.getDistrict());
+        addressDTO.setAddressLine(address.getAddressLine());
+
+        userDTO.setAddress(addressDTO);
+
+        orderDTO.setUser(userDTO);
+
+        List<OrderItem> orderItems = order.getItems();
+        List<OrderItemDTO> orderItemDTOS = new ArrayList<>();
+        for (OrderItem orderItem : orderItems) {
+            OrderItemDTO orderItemDTO = new OrderItemDTO();
+
+            orderItemDTO.setQuantity(orderItem.getQuantity());
+            orderItemDTO.setPrice(orderItem.getPrice());
+
+            ProductVariant productVariant = orderItem.getProductVariant();
+            Size size = productVariant.getSize();
+            SizeResponse sizeResponse = new SizeResponse();
+            sizeResponse.setName(size.getName());
+            ProductVariantResponse productVariantResponse = new ProductVariantResponse();
+            productVariantResponse.setSize(sizeResponse);
+
+            orderItemDTO.setVariant(productVariantResponse);
+
+            orderItemDTOS.add(orderItemDTO);
+        }
+        return orderDTO;
+    }
 
 }

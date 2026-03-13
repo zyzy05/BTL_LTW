@@ -23,4 +23,8 @@ public class CartItem {
     @ManyToOne
     @JoinColumn(name = "product_variant_id")
     private ProductVariant productVariant;
+
+    public CartItem orElse(Object o) {
+        return null;
+    }
 }
