@@ -21,7 +21,7 @@ public class Address {
 
     private String ward;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
     private User user;
 }

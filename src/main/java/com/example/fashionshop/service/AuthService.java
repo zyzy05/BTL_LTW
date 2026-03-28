@@ -20,6 +20,9 @@ public class AuthService {
     private AddressRepository addressRepository;
     // đăng kí
     public boolean register (RegisterRequest registerRequest) {
+        if (userRepository.findByUsername(registerRequest.getUsername()) != null) {
+            return false;
+        }
         User user = new User();
 
         user.setUsername(registerRequest.getUsername());
@@ -38,8 +41,9 @@ public class AuthService {
 
         address.setUser(user);
         user.setAddress(address);
-        addressRepository.save(address);
         userRepository.save(user);
+        addressRepository.save(address);
+
 
         return true;
 
