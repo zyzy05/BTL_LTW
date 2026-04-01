@@ -34,8 +34,16 @@ public class OrderController {
     @GetMapping("/order/{id}")
     public ResponseEntity<?> getOrderById (@PathVariable long id) {
         ResponseData responseData = new ResponseData();
+        responseData.setData(orderService.getOrderById(id));
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+    // xem chi tiet don hang by id
+    @GetMapping("/order/items/{id}")
+    public ResponseEntity<?> getOrderItemsById (@PathVariable long id) {
+        ResponseData responseData = new ResponseData();
         responseData.setData(orderService.getOrderItemsByIdCustomer(id));
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
+
 
 }

@@ -165,7 +165,7 @@ public class OrderService {
 
     // ================= CUSTOMER =================
 
-    public OrderDTO getOrderItemsByIdCustomer(long id) {
+    public List<OrderItemDTO> getOrderItemsByIdCustomer(long id) {
 
         Order order = orderRepository.findById(id).orElse(null);
         if (order == null) return null;
@@ -190,7 +190,7 @@ public class OrderService {
 
         orderDTO.setOrderItems(itemDTOList);
 
-        return orderDTO;
+        return itemDTOList;
     }
 
     public List<OrderDTO> getAllOrdersByUsername(String username) {
