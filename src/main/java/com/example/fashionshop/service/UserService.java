@@ -57,17 +57,17 @@ public class UserService {
             return false;
         }
 
-        // kiểm tra mật khẩu hiện tại
+
         if (!request.getCurrentPassword().equals(user.getPassword())) {
             return false;
         }
 
-        // kiểm tra confirm password
+
         if (!request.getNewPassword().equals(request.getConfirmPassword())) {
             return false;
         }
 
-        // đổi mật khẩu
+
         user.setPassword(request.getNewPassword());
         userRepository.save(user);
 
