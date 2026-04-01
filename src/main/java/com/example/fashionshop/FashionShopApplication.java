@@ -7,7 +7,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FashionShopApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FashionShopApplication.class, args);
-	}
+		try
+		{
+			SpringApplication.run(FashionShopApplication.class, args);
+			System.out.println("Chạy thành công");
+		}
 
+		catch (Exception e)
+		{
+			System.out.println("Chạy thất bất");
+		}
+
+}
 }
