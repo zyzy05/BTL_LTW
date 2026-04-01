@@ -4,7 +4,12 @@ import com.example.fashionshop.entity.CartItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
+    CartItem findByCartIdAndProductVariantId(Integer cartId, Long variantId);
+
+    List<CartItem> findByCartId(Integer id);
 }

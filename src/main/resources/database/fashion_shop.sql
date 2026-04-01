@@ -23,10 +23,27 @@
 
     CREATE TABLE carts (
         id INT AUTO_INCREMENT PRIMARY KEY,
+        total_price DOUBLE,
         created_at DATETIME,
         user_id INT UNIQUE,
         FOREIGN KEY (user_id) REFERENCES users(id)
     );
+
+    ALTER TABLE carts
+    ADD COLUMN total_price DECIMAL(12,2) DEFAULT 0;
+
+    UPDATE carts c
+    JOIN (
+        SELECT
+            c.id,
+            SUM(ci.quantity * p.price) AS total
+        FROM carts c
+        JOIN cart_items ci ON c.id = ci.cart_id
+        JOIN product_variants pv ON ci.product_variant_id = pv.id
+        JOIN products p ON pv.product_id = p.id
+        GROUP BY c.id
+    ) t ON c.id = t.id
+    SET c.total_price = t.total;
 
     CREATE TABLE categories (
         id INT AUTO_INCREMENT PRIMARY KEY,

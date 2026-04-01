@@ -16,6 +16,8 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private Double totalPrice;
+
     private LocalDateTime createdAt;
 
     @OneToOne

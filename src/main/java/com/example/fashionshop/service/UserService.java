@@ -81,7 +81,7 @@ public class UserService {
         List<UserDTO> userDTOs = new ArrayList<>();
         for (User user : users) {
             UserDTO userDTO = new UserDTO();
-            userDTO.setId(user.getId());
+            userDTO.setId(Math.toIntExact(user.getId()));
             userDTO.setUsername(user.getUsername());
             userDTO.setEmail(user.getEmail());
             userDTO.setFullName(user.getFullName());

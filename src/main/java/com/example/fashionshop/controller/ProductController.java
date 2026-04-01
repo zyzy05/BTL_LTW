@@ -23,7 +23,6 @@ public class ProductController {
     }
 
     // hiển thị chi tiết san pham
-
     @GetMapping("/products/{id}")
     public ResponseEntity<?> getProductDetail (@PathVariable long id)
     {
@@ -34,7 +33,6 @@ public class ProductController {
     }
 
     // loc san pham theo muc gia
-
     @GetMapping("/products/filter")
     public ResponseEntity<?> filterPrice (@RequestParam Double minPrice,
                                           @RequestParam Double maxPrice)

@@ -59,8 +59,6 @@ public class ProductService {
             request.setImages(productImageResponses);
             productsResponses.add(request);
         }
-
-
         return productsResponses;
     }
 
@@ -102,10 +100,6 @@ public class ProductService {
 
         request.setProductVariants(productVariantResponses);
         request.setImages(productImageResponses);
-
-
-
-
 
         return request;
     }

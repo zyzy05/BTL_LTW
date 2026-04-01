@@ -7,6 +7,9 @@ import com.example.fashionshop.dto.response.products.ProductsResponse;
 import com.example.fashionshop.dto.response.products.SizeResponse;
 import com.example.fashionshop.entity.*;
 import com.example.fashionshop.repository.CartItemRepository;
+import com.example.fashionshop.repository.CartRepository;
+import com.example.fashionshop.repository.ProductRepository;
+import com.example.fashionshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +19,16 @@ import java.util.List;
 @Service
 public class CartItemService {
     @Autowired
-            private CartItemRepository cartItemRepository;
+    private CartItemRepository cartItemRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private CartRepository cartRepository;
+
+    @Autowired
+    private UserRepository userRepository;
     public CartItemDTO getCartItemById(Long id) {
         CartItem cartItem = cartItemRepository.findById(id).orElse(null);
         CartItemDTO cartItemDTO = new CartItemDTO();
@@ -51,15 +63,58 @@ public class CartItemService {
 
         cartItemDTO.setProductVariantResponse(productVariantResponse);
 
-
-
-
-
-
-
-
-
-
         return cartItemDTO;
+    }
+
+    // them sp vao cart
+    public void addToCart(String username, Long productId, Integer quantity, Long variantId) {
+
+        User user = userRepository.findByUsername(username);
+
+        Cart cart = cartRepository.findByUserId(user.getId());
+
+        Product product = productRepository.findById(productId).orElseThrow();
+
+        CartItem cartItem = cartItemRepository
+                .findByCartIdAndProductVariantId(cart.getId(), variantId);
+
+        if (cartItem == null) {
+
+            cartItem = new CartItem();
+            cartItem.setCart(cart);
+
+            ProductVariant variant = null;
+
+            for (ProductVariant v : product.getVariants()) {
+                if (v.getId() == variantId) {
+                    variant = v;
+                    break;
+                }
+            }
+
+            if (variant == null) {
+                throw new RuntimeException("Variant not found");
+            }
+            cartItem.setProductVariant(variant);
+
+            cartItem.setQuantity(quantity);
+
+        } else {
+            cartItem.setQuantity(cartItem.getQuantity() + quantity);
+
+        }
+        cartItemRepository.save(cartItem);
+    }
+
+    // xoa sp khoi cart
+    public boolean deleteCartItem(long id) {
+
+        try {
+            cartItemRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 }

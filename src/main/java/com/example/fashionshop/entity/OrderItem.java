@@ -1,5 +1,6 @@
 package com.example.fashionshop.entity;
 
+import com.example.fashionshop.dto.response.products.ProductVariantResponse;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
