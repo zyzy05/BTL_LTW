@@ -67,7 +67,7 @@ public class CartItemService {
     }
 
     // them sp vao cart
-    public boolean addToCart(String username, Long productId, Integer quantity, Long variantId) {
+    public void addToCart(String username, Long productId, Integer quantity, Long variantId) {
         User user = userRepository.findByUsername(username);
         Cart cart = cartRepository.findByUserId(user.getId());
         Product product = productRepository.findById(productId).orElseThrow();
@@ -91,14 +91,12 @@ public class CartItemService {
         cartItem.setQuantity(quantity);
 
         cartItemRepository.save(cartItem);
-        return true;
     }
 
     // xoa sp khoi cart
     public boolean deleteCartItem(long id) {
 
         try {
-            cartItemRepository.findById(id).orElseThrow();
             cartItemRepository.deleteById(id);
             return true;
         }

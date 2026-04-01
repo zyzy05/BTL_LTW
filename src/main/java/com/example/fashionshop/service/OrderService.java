@@ -33,6 +33,9 @@ public class OrderService {
     @Autowired
     private CartRepository cartRepository;
 
+    @Autowired
+    private ProductImageRepository productImageRepository;
+
     // ================= ADMIN =================
 
     public List<OrderDTO> getAllOrders() {
@@ -163,9 +166,8 @@ public class OrderService {
         return orderDTO;
     }
 
-    // ================= CUSTOMER =================
-
-    public List<OrderItemDTO> getOrderItemsByIdCustomer(long id) {
+    // xem chi tiet don hang
+    public OrderDTO getOrderItemsByIdOrder(long id) {
 
         Order order = orderRepository.findById(id).orElse(null);
         if (order == null) return null;
@@ -176,21 +178,45 @@ public class OrderService {
         orderDTO.setPaymentStatus(order.getPaymentStatus());
         orderDTO.setShippingName(order.getShippingName());
 
-        List<OrderItemDTO> itemDTOList = new ArrayList<>();
+        List<OrderItemDTO> orderItemDTOS = new ArrayList<>();
 
         List<OrderItem> orderItems = orderItemRepository.findByOrderId(order.getId());
-        for (OrderItem item : orderItems) {
+        for (OrderItem orderItem : orderItems) {
 
-            OrderItemDTO dto = new OrderItemDTO();
-            dto.setQuantity(item.getQuantity());
-            dto.setPrice(item.getPrice());
+            OrderItemDTO orderItemDTO = new OrderItemDTO();
+            orderItemDTO.setPrice(orderItem.getPrice());
+            orderItemDTO.setQuantity(orderItem.getQuantity());
 
-            itemDTOList.add(dto);
+            ProductVariant productVariant = orderItem.getProductVariant();
+            ProductVariantResponse productVariantResponse = new ProductVariantResponse();
+
+            Product product = productVariant.getProduct();
+            ProductsResponse productsResponse = new ProductsResponse();
+            productsResponse.setName(product.getName());
+            productsResponse.setDescription(product.getDescription());
+
+            List<ProductImageResponse> productImageResponseList = new ArrayList<>();
+            List<ProductImage> productImageList = productImageRepository.findAll();
+            for(ProductImage productImage : productImageList) {
+                ProductImageResponse productImageResponse = new ProductImageResponse();
+                productImageResponse.setImageUrl(productImage.getImageUrl());
+            }
+            productsResponse.setImages(productImageResponseList);
+
+            Size size = productVariant.getSize();
+            SizeResponse sizeResponse = new SizeResponse();
+            sizeResponse.setName(size.getName());
+
+            productVariantResponse.setSize(sizeResponse);
+            productVariantResponse.setProductResponse(productsResponse);
+
+            orderItemDTO.setVariant(productVariantResponse);
+            orderItemDTOS.add(orderItemDTO);
         }
 
-        orderDTO.setOrderItems(itemDTOList);
+        orderDTO.setOrderItems(orderItemDTOS);
 
-        return itemDTOList;
+        return orderDTO;
     }
 
     public List<OrderDTO> getAllOrdersByUsername(String username) {
@@ -217,8 +243,7 @@ public class OrderService {
         return result;
     }
 
-    // ================= ORDER ACTION =================
-
+    // dat hang
     @Transactional
     public boolean placeOrder(String username) {
 
@@ -300,325 +325,3 @@ public class OrderService {
         return true;
     }
 }
-
-//@Service
-//public class OrderService {
-//    @Autowired
-//    private OrderRepository orderRepository;
-//
-//    @Autowired
-//    private OrderItemRepository orderItemRepository;
-//
-//    @Autowired
-//    private UserRepository userRepository;
-//
-//    @Autowired
-//    private CartRepository cartRepository;
-//
-//    // xem tat ca don hang - Admin
-//    public List<OrderDTO> getAllOrders() {
-//        List<OrderDTO> request = new ArrayList<>();
-//        List<Order> orders = orderRepository.findAll();
-//        for (Order order : orders) {
-//
-//            OrderDTO orderDTO = new OrderDTO();
-//            orderDTO.setId(order.getId());
-//            orderDTO.setTotalPrice(order.getTotalPrice());
-//            orderDTO.setStatus(order.getStatus());
-//            orderDTO.setPaymentMethod(order.getPaymentMethod());
-//            orderDTO.setPaymentStatus(order.getPaymentStatus());
-//            orderDTO.setShippingName(order.getShippingName());
-//            orderDTO.setShippingAddress(order.getShippingAddress());
-//            orderDTO.setCreatedAt(order.getCreatedAt());
-//
-//            User user = order.getUser();
-//
-//            UserDTO userDTO = new UserDTO();
-//
-//            userDTO.setFullName(user.getUsername());
-//            userDTO.setEmail(user.getEmail());
-//            userDTO.setPhone(user.getPhone());
-//
-//            Address address = user.getAddress();
-//            AddressDTO addressDTO = new AddressDTO();
-//
-//            addressDTO.setWard(address.getWard());
-//            addressDTO.setCity(address.getCity());
-//            addressDTO.setDistrict(address.getDistrict());
-//            addressDTO.setAddressLine(address.getAddressLine());
-//
-//            userDTO.setAddress(addressDTO);
-//
-//            orderDTO.setUser(userDTO);
-//
-//            List<OrderItem> orderItems = order.getItems();
-//            List<OrderItemDTO> orderItemDTOS = new ArrayList<>();
-//            for (OrderItem orderItem : orderItems) {
-//                OrderItemDTO orderItemDTO = new OrderItemDTO();
-//
-//                orderItemDTO.setQuantity(orderItem.getQuantity());
-//                orderItemDTO.setPrice(orderItem.getPrice());
-//
-//                ProductVariant productVariant = orderItem.getProductVariant();
-//                Size size = productVariant.getSize();
-//                SizeResponse sizeResponse = new SizeResponse();
-//                sizeResponse.setName(size.getName());
-//                ProductVariantResponse productVariantResponse = new ProductVariantResponse();
-//                productVariantResponse.setSize(sizeResponse);
-//
-//                orderItemDTO.setVariant(productVariantResponse);
-//
-//
-//                orderItemDTOS.add(orderItemDTO);
-//            }
-//            request.add(orderDTO);
-//        }
-//
-//        return request;
-//    }
-//
-//    // xem chi tiet don hang theo id - Admin
-//    public OrderDTO getOrderById(long id) {
-//        OrderDTO orderDTO = new OrderDTO();
-//        Order order = orderRepository.findById(id).orElse(null);
-//        orderDTO.setId(order.getId());
-//        orderDTO.setTotalPrice(order.getTotalPrice());
-//        orderDTO.setStatus(order.getStatus());
-//        orderDTO.setPaymentMethod(order.getPaymentMethod());
-//        orderDTO.setPaymentStatus(order.getPaymentStatus());
-//        orderDTO.setShippingName(order.getShippingName());
-//        orderDTO.setShippingAddress(order.getShippingAddress());
-//        orderDTO.setCreatedAt(order.getCreatedAt());
-//
-//        User user = order.getUser();
-//
-//        UserDTO userDTO = new UserDTO();
-//
-//        userDTO.setFullName(user.getUsername());
-//        userDTO.setEmail(user.getEmail());
-//        userDTO.setPhone(user.getPhone());
-//
-//        Address address = user.getAddress();
-//        AddressDTO addressDTO = new AddressDTO();
-//
-//        addressDTO.setWard(address.getWard());
-//        addressDTO.setCity(address.getCity());
-//        addressDTO.setDistrict(address.getDistrict());
-//        addressDTO.setAddressLine(address.getAddressLine());
-//
-//        userDTO.setAddress(addressDTO);
-//
-//        orderDTO.setUser(userDTO);
-//
-//        List<OrderItem> orderItems = order.getItems();
-//        List<OrderItemDTO> orderItemDTOS = new ArrayList<>();
-//        for (OrderItem orderItem : orderItems) {
-//            OrderItemDTO orderItemDTO = new OrderItemDTO();
-//
-//            orderItemDTO.setQuantity(orderItem.getQuantity());
-//            orderItemDTO.setPrice(orderItem.getPrice());
-//
-//            ProductVariant productVariant = orderItem.getProductVariant();
-//            Size size = productVariant.getSize();
-//            SizeResponse sizeResponse = new SizeResponse();
-//            sizeResponse.setName(size.getName());
-//            ProductVariantResponse productVariantResponse = new ProductVariantResponse();
-//            productVariantResponse.setSize(sizeResponse);
-//
-//            orderItemDTO.setVariant(productVariantResponse);
-//
-//
-//            orderItemDTOS.add(orderItemDTO);
-//        }
-//        return orderDTO;
-//    }
-//
-//    // xem chi tiet don hang theo Id - Customer
-//    public OrderDTO getOrderItemsByIdCustomer(long id) {
-//        Order order = orderRepository.findById(id).orElse(null);
-//
-//        if (order == null) {
-//            return null;
-//        }
-//
-//        OrderDTO orderDTO = new OrderDTO();
-//
-//        orderDTO.setTotalPrice(order.getTotalPrice());
-//        orderDTO.setPaymentMethod(order.getPaymentMethod());
-//        orderDTO.setPaymentStatus(order.getPaymentStatus());
-//        orderDTO.setShippingName(order.getShippingName());
-//
-//        User user = order.getUser();
-//        UserDTO userDTO = new UserDTO();
-//
-//        Address address = user.getAddress();
-//        AddressDTO addressDTO = new AddressDTO();
-//
-//        addressDTO.setWard(address.getWard());
-//        addressDTO.setCity(address.getCity());
-//        addressDTO.setDistrict(address.getDistrict());
-//        addressDTO.setAddressLine(address.getAddressLine());
-//
-//        userDTO.setAddress(addressDTO);
-//        orderDTO.setUser(userDTO);
-//
-//        List<OrderItem> orderItems = orderItemRepository.findByOrderId(order.getId());
-//        List<OrderItemDTO> itemDTOList = new ArrayList<>();
-//
-//        for (OrderItem item : orderItems) {
-//
-//            OrderItemDTO itemDTO = new OrderItemDTO();
-//            itemDTO.setQuantity(item.getQuantity());
-//            itemDTO.setPrice(item.getPrice());
-//
-//            ProductVariant variant = item.getProductVariant();
-//            ProductVariantResponse variantRes = new ProductVariantResponse();
-//
-//            Product product = variant.getProduct();
-//            ProductsResponse productRes = new ProductsResponse();
-//            productRes.setName(product.getName());
-//            productRes.setPrice(product.getPrice());
-//
-//            // images
-//            List<ProductImageResponse> imgList = new ArrayList<>();
-//            for (ProductImage img : product.getImages()) {
-//                ProductImageResponse imgRes = new ProductImageResponse();
-//                imgRes.setImageUrl(img.getImageUrl());
-//                imgList.add(imgRes);
-//            }
-//            productRes.setImages(imgList);
-//
-//            variantRes.setProductResponse(productRes);
-//            itemDTO.setVariant(variantRes);
-//
-//            itemDTOList.add(itemDTO);
-//        }
-//
-//        orderDTO.setOrderItems(itemDTOList);
-//
-//        return orderDTO;
-//    }
-//
-//    // xem tat ca don hang theo id - Customer
-//    public List<OrderDTO> getAllOrdersByUsername(String username) {
-//
-//        User user = userRepository.findByUsername(username);
-//        if (user == null) return new ArrayList<>();
-//
-//        List<Order> orders = orderRepository.findByUserId(user.getId());
-//        List<OrderDTO> orderDTOList = new ArrayList<>();
-//
-//        for (Order order : orders) {
-//
-//            OrderDTO orderDTO = new OrderDTO();
-//
-//            orderDTO.setTotalPrice(order.getTotalPrice());
-//            orderDTO.setPaymentMethod(order.getPaymentMethod());
-//            orderDTO.setPaymentStatus(order.getPaymentStatus());
-//            orderDTO.setShippingName(order.getShippingName());
-//
-//            // user info
-//            UserDTO userDTO = new UserDTO();
-//            Address address = user.getAddress();
-//
-//            if (address != null) {
-//                AddressDTO addressDTO = new AddressDTO();
-//                addressDTO.setWard(address.getWard());
-//                addressDTO.setCity(address.getCity());
-//                addressDTO.setDistrict(address.getDistrict());
-//                addressDTO.setAddressLine(address.getAddressLine());
-//                userDTO.setAddress(addressDTO);
-//            }
-//
-//            orderDTO.setUser(userDTO);
-//
-//            orderDTOList.add(orderDTO);
-//        }
-//
-//        return orderDTOList;
-//    }
-//
-//    // dat hang
-//    @Transactional
-//    public boolean placeOrder(String username) {
-//
-//        User user = userRepository.findByUsername(username);
-//        if (user == null) {
-//            return false;
-//        }
-//
-//        Cart cart = cartRepository.findByUser(user);
-//        if (cart == null || cart.getItems().isEmpty()) {
-//            return false;
-//        }
-//
-//        Order order = new Order();
-//        order.setUser(user);
-//        order.setStatus(OrderStatus.PENDING);
-//        order.setPaymentStatus(PaymentStatus.PENDING);
-//        order.setPaymentMethod(PaymentMethod.COD);
-//        order.setShippingName(user.getFullName());
-//
-//        List<OrderItem> orderItems = new ArrayList<>();
-//        double totalPrice = 0;
-//
-//        for (CartItem cartItem : cart.getItems()) {
-//
-//            OrderItem orderItem = new OrderItem();
-//            orderItem.setOrder(order);
-//            orderItem.setProductVariant(cartItem.getProductVariant());
-//            orderItem.setQuantity(cartItem.getQuantity());
-//
-//            ProductVariant variant = orderItem.getProductVariant();
-//            ProductVariantResponse variantRes = new ProductVariantResponse();
-//
-//            Product product = variant.getProduct();
-//            ProductsResponse productRes = new ProductsResponse();
-//
-//            totalPrice += product.getPrice() * cartItem.getQuantity();
-//
-//            orderItems.add(orderItem);
-//        }
-//
-//        order.setItems(orderItems);
-//        order.setTotalPrice(totalPrice);
-//
-//        orderRepository.save(order);
-//
-//        // clear cart
-//        cart.getItems().clear();
-//        cartRepository.save(cart);
-//
-//        return true;
-//    }
-//
-//    // huy don hang
-//    public boolean cancelOrder(long id) {
-//
-//        Order order = orderRepository.findById(id).orElse(null);
-//
-//        if(order == null){
-//            return false;
-//        }
-//
-//        order.setStatus(OrderStatus.CANCELLED);
-//        orderRepository.save(order);
-//
-//        return true;
-//    }
-//
-//    // cap nhat trang thai don - Admin
-//    public boolean updateStatusOrder(long id, String status) {
-//
-//        Order order = orderRepository.findById(id).orElse(null);
-//
-//        if(order == null){
-//            return false;
-//        }
-//
-//        order.setStatus(OrderStatus.valueOf(status));
-//        orderRepository.save(order);
-//
-//        return true;
-//    }
-//}
