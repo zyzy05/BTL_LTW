@@ -68,41 +68,28 @@ public class CartItemService {
 
     // them sp vao cart
     public void addToCart(String username, Long productId, Integer quantity, Long variantId) {
-
         User user = userRepository.findByUsername(username);
-
         Cart cart = cartRepository.findByUserId(user.getId());
-
         Product product = productRepository.findById(productId).orElseThrow();
 
-        CartItem cartItem = cartItemRepository
-                .findByCartIdAndProductVariantId(cart.getId(), variantId);
+        CartItem cartItem = new CartItem();
+        cartItem.setCart(cart);
 
-        if (cartItem == null) {
-
-            cartItem = new CartItem();
-            cartItem.setCart(cart);
-
-            ProductVariant variant = null;
-
-            for (ProductVariant v : product.getVariants()) {
-                if (v.getId() == variantId) {
-                    variant = v;
-                    break;
-                }
+        ProductVariant variant = null;
+        for (ProductVariant v : product.getVariants()) {
+            if (v.getId() == variantId) {
+                variant = v;
+                break;
             }
-
-            if (variant == null) {
-                throw new RuntimeException("Variant not found");
-            }
-            cartItem.setProductVariant(variant);
-
-            cartItem.setQuantity(quantity);
-
-        } else {
-            cartItem.setQuantity(cartItem.getQuantity() + quantity);
-
         }
+
+        if (variant == null) {
+            throw new RuntimeException("Variant not found");
+        }
+
+        cartItem.setProductVariant(variant);
+        cartItem.setQuantity(quantity);
+
         cartItemRepository.save(cartItem);
     }
 

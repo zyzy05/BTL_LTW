@@ -27,15 +27,18 @@ public class CartItemController {
             @RequestParam Long variantId,
             @RequestParam Integer quantity
     ) {
-
-        String username = authentication.getName();
-
-        cartItemService.addToCart(username, productId, quantity, variantId);
-
         ResponseData responseData = new ResponseData();
-        responseData.setData("Add to cart success");
 
-        return ResponseEntity.ok(responseData);
+        try {
+            String username = authentication.getName();
+            cartItemService.addToCart(username, productId, quantity, variantId);
+
+            responseData.setData("Add to cart success");
+            return ResponseEntity.ok(responseData);
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(responseData);
+        }
     }
 
     // xem chi tiết 1 sản phẩm trong giỏ
