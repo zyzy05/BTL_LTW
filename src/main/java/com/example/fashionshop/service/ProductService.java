@@ -30,6 +30,7 @@ public class ProductService {
         for (Product product : products) {
             ProductsResponse request = new ProductsResponse();
 
+            request.setId(product.getId());
             request.setName(product.getName());
             request.setPrice(product.getPrice());
             request.setDescription(product.getDescription());
@@ -46,6 +47,7 @@ public class ProductService {
             List<ProductVariantResponse> productVariantResponses = new ArrayList<>();
             for (ProductVariant variant : product.getVariants()) {
                 ProductVariantResponse productVariantResponse = new ProductVariantResponse();
+                productVariantResponse.setId(variant.getId());
                 Size size = variant.getSize();
                 SizeResponse sizeResponse = new SizeResponse();
                 sizeResponse.setName(size.getName());
@@ -67,12 +69,14 @@ public class ProductService {
         Product product = productRepository.findById(id).orElse(null);
         ProductsResponse productsResponse = new ProductsResponse();
 
+        productsResponse.setId(product.getId());
         productsResponse.setName(product.getName());
         productsResponse.setPrice(product.getPrice());
         productsResponse.setDescription(product.getDescription());
 
         ProductsResponse request = new ProductsResponse();
 
+        request.setId(product.getId());
         request.setName(product.getName());
         request.setPrice(product.getPrice());
         request.setDescription(product.getDescription());
@@ -89,6 +93,7 @@ public class ProductService {
         List<ProductVariantResponse> productVariantResponses = new ArrayList<>();
         for (ProductVariant variant : product.getVariants()) {
             ProductVariantResponse productVariantResponse = new ProductVariantResponse();
+            productVariantResponse.setId(variant.getId());
             Size size = variant.getSize();
             SizeResponse sizeResponse = new SizeResponse();
             sizeResponse.setName(size.getName());
@@ -114,6 +119,7 @@ public class ProductService {
         for (Product product : products) {
             ProductsResponse request = new ProductsResponse();
 
+            request.setId(product.getId());
             request.setName(product.getName());
             request.setPrice(product.getPrice());
             request.setDescription(product.getDescription());
@@ -130,6 +136,7 @@ public class ProductService {
             List<ProductVariantResponse> productVariantResponses = new ArrayList<>();
             for (ProductVariant variant : product.getVariants()) {
                 ProductVariantResponse productVariantResponse = new ProductVariantResponse();
+                productVariantResponse.setId(variant.getId());
                 Size size = variant.getSize();
                 SizeResponse sizeResponse = new SizeResponse();
                 sizeResponse.setName(size.getName());
@@ -155,6 +162,7 @@ public class ProductService {
         for (Product product : products) {
             ProductsResponse request = new ProductsResponse();
 
+            request.setId(product.getId());
             request.setName(product.getName());
             request.setPrice(product.getPrice());
             request.setDescription(product.getDescription());
@@ -171,6 +179,7 @@ public class ProductService {
             List<ProductVariantResponse> productVariantResponses = new ArrayList<>();
             for (ProductVariant variant : product.getVariants()) {
                 ProductVariantResponse productVariantResponse = new ProductVariantResponse();
+                productVariantResponse.setId(variant.getId());
                 Size size = variant.getSize();
                 SizeResponse sizeResponse = new SizeResponse();
                 sizeResponse.setName(size.getName());

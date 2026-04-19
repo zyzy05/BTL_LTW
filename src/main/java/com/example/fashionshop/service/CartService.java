@@ -5,6 +5,7 @@ import com.example.fashionshop.dto.CartItemDTO;
 import com.example.fashionshop.dto.response.products.ProductImageResponse;
 import com.example.fashionshop.dto.response.products.ProductVariantResponse;
 import com.example.fashionshop.dto.response.products.ProductsResponse;
+import com.example.fashionshop.dto.response.products.SizeResponse;
 import com.example.fashionshop.entity.*;
 import com.example.fashionshop.repository.CartItemRepository;
 import com.example.fashionshop.repository.CartRepository;
@@ -39,15 +40,18 @@ public class CartService {
         List<CartItemDTO> cartItemDTOs = new ArrayList<>();
         for (CartItem Item : cartItemList) {
             CartItemDTO cartItemDTO = new CartItemDTO();
+            cartItemDTO.setId(Math.toIntExact(Item.getId()));
             cartItemDTO.setQuantity(Item.getQuantity());
 
             // product variant
             ProductVariant productVariant = Item.getProductVariant();
             ProductVariantResponse productVariantResponse = new ProductVariantResponse();
+            productVariantResponse.setId(productVariant.getId());
 
             // product
             Product product = productVariant.getProduct();
             ProductsResponse productsResponse = new ProductsResponse();
+            productsResponse.setId(product.getId());
             productsResponse.setName(product.getName());
             productsResponse.setPrice(product.getPrice());
 
@@ -60,6 +64,14 @@ public class CartService {
                 productImageResponseList.add(productImageResponse);
             }
             productsResponse.setImages(productImageResponseList);
+
+            // size
+            Size size = productVariant.getSize();
+            if (size != null) {
+                SizeResponse sizeResponse = new SizeResponse();
+                sizeResponse.setName(size.getName());
+                productVariantResponse.setSize(sizeResponse);
+            }
 
             productVariantResponse.setProductResponse(productsResponse);
 
@@ -77,6 +89,11 @@ public class CartService {
         User user = userRepository.findByUsername(username);
 
         Cart cart = cartRepository.findByUserId(user.getId());
+        if (cart == null) {
+            cart = new Cart();
+            cart.setUser(user);
+            cart = cartRepository.save(cart);
+        }
 
         return convertToDTO(cart);
     }

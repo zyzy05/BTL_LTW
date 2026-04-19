@@ -16,5 +16,5 @@ public class CartItemDTO {
 
     private Integer quantity;
 
-    private ProductVariantResponse ProductVariantResponse;
+    private ProductVariantResponse productVariantResponse;
 }

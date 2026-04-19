@@ -70,27 +70,42 @@ public class CartItemService {
     public void addToCart(String username, Long productId, Integer quantity, Long variantId) {
         User user = userRepository.findByUsername(username);
         Cart cart = cartRepository.findByUserId(user.getId());
-        Product product = productRepository.findById(productId).orElseThrow();
+        
+        // Ensure cart exists (should be handled by getCartByUsername, but safe to check)
+        if (cart == null) {
+            cart = new Cart();
+            cart.setUser(user);
+            cart = cartRepository.save(cart);
+        }
 
-        CartItem cartItem = new CartItem();
-        cartItem.setCart(cart);
-
-        ProductVariant variant = null;
-        for (ProductVariant v : product.getVariants()) {
-            if (v.getId() == variantId) {
-                variant = v;
-                break;
+        // Check if item with this variant already exists in the cart
+        CartItem existingItem = cartItemRepository.findByCartIdAndProductVariantId(cart.getId(), variantId);
+        
+        if (existingItem != null) {
+            // Merge: just update quantity
+            existingItem.setQuantity(existingItem.getQuantity() + quantity);
+            cartItemRepository.save(existingItem);
+        } else {
+            // New Item
+            Product product = productRepository.findById(productId).orElseThrow();
+            ProductVariant variant = null;
+            for (ProductVariant v : product.getVariants()) {
+                if (v.getId() == variantId) {
+                    variant = v;
+                    break;
+                }
             }
+
+            if (variant == null) {
+                throw new RuntimeException("Variant not found");
+            }
+
+            CartItem cartItem = new CartItem();
+            cartItem.setCart(cart);
+            cartItem.setProductVariant(variant);
+            cartItem.setQuantity(quantity);
+            cartItemRepository.save(cartItem);
         }
-
-        if (variant == null) {
-            throw new RuntimeException("Variant not found");
-        }
-
-        cartItem.setProductVariant(variant);
-        cartItem.setQuantity(quantity);
-
-        cartItemRepository.save(cartItem);
     }
 
     // xoa sp khoi cart

@@ -33,42 +33,33 @@ INSERT INTO sizes (name) VALUES
 
 -- PRODUCTS
 INSERT INTO products (name,description,price,category_id,created_at) VALUES
-('Quan dui nam','Quan dui the thao',120000,1,NOW()),
-('Quan jean nam','Quan jean dep',350000,8,NOW()),
-('Ao thun nam','Ao thun cotton',150000,9,NOW()),
-('Ao khoac hoodie','Ao khoac hoodie am',400000,6,NOW()),
-('Giay sneaker','Giay sneaker thoi trang',600000,3,NOW()),
-('Dep sandal','Dep sandal nam',200000,4,NOW()),
-('Ao the thao','Ao mac tap gym',180000,7,NOW()),
-('Quan tay','Quan tay cong so',320000,1,NOW()),
-('Tui deo cheo','Tui deo cheo nho',250000,10,NOW()),
-('Ao so mi','Ao so mi cong so',280000,2,NOW());
+('Baby', 'Đồ sơ sinh bé yêu', 150000, 1, NOW()),
+('Boy shirt', 'Áo sơ mi bé trai', 180000, 2, NOW()),
+('Girl dress', 'Váy công chúa bé gái', 250000, 3, NOW()),
+('Set liền thân Newborn', 'Đồ mặc ở nhà siêu mềm mại cho bé mới sinh', 120000, 1, NOW()),
+('Áo Cardigan len bé gái', 'Áo khoác len mỏng cho bé gái điệu đà ngày se lạnh', 220000, 6, NOW()),
+('Quần Jeans bé trai năng động', 'Quần bé trai vải jean denim cao cấp', 190000, 8, NOW()),
+('Giày tập đi êm ái', 'Giày mềm nhẹ bước đi đầu đời cho mầm non', 150000, 3, NOW());
 
 -- PRODUCT IMAGES
-INSERT INTO product_images (product_id,image_url,is_main) VALUES
-(1,'quan1.jpg',true),
-(2,'quan2.jpg',true),
-(3,'ao1.jpg',true),
-(4,'hoodie.jpg',true),
-(5,'giay1.jpg',true),
-(6,'dep1.jpg',true),
-(7,'aothethao.jpg',true),
-(8,'quantay.jpg',true),
-(9,'tui.jpg',true),
-(10,'aosomi.jpg',true);
+INSERT INTO product_images (image_url, is_main, product_id) VALUES
+('bestseller.png', 1, 1),
+('bestseller_2.png', 1, 2),
+('bestseller_3.png', 1, 3),
+('onesie.png', 1, 4),
+('girl_cardigan.png', 1, 5),
+('boy_jeans.png', 1, 6),
+('baby_shoes.png', 1, 7);
 
--- PRODUCT VARIANTS
+-- PRODUCT VARIANTS (ID 1-16)
 INSERT INTO product_variants (product_id,size_id,stock_quantity) VALUES
-(1,2,50),
-(1,3,40),
-(2,8,30),
-(2,9,20),
-(3,1,60),
-(3,2,55),
-(4,3,25),
-(5,3,15),
-(6,2,45),
-(7,3,35);
+(1,1,50), (1,2,40), (1,3,30),
+(2,1,30), (2,2,20), (2,3,25),
+(3,1,60), (3,2,55), (3,3,45), (3,4,35),
+(4,1,20), (4,2,30),
+(5,2,40),
+(6,1,25), (6,3,50),
+(7,1,10);
 
 -- ADDRESSES
 INSERT INTO addresses (user_id,address_line,city,district,ward) VALUES
@@ -85,8 +76,8 @@ INSERT INTO addresses (user_id,address_line,city,district,ward) VALUES
 
 -- CARTS
 INSERT INTO carts (user_id, total_price,created_at) VALUES
-(1,NOW()),(2,NOW()),(3,NOW()),(4,NOW()),(5,NOW()),
-(6,NOW()),(7,NOW()),(8,NOW()),(9,NOW()),(10,NOW());
+(1,0,NOW()),(2,0,NOW()),(3,0,NOW()),(4,0,NOW()),(5,0,NOW()),
+(6,0,NOW()),(7,0,NOW()),(8,0,NOW()),(9,0,NOW()),(10,0,NOW());
 
 -- CART ITEMS
 INSERT INTO cart_items (cart_id,product_variant_id,quantity) VALUES
