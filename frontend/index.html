@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - LUXE FW Kids</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .section-title { text-align: center; margin-bottom: 3rem; font-size: 2.5rem; color: var(--primary); }
+        .section-padding { padding: 5rem 0; }
+        .banner { background-color: var(--primary); color: white; border-radius: var(--radius-lg); padding: 4rem; text-align: center; margin: 4rem 0; }
+        .banner h2 { font-size: 2.5rem; margin-bottom: 1rem; color: white;}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">LUXE<span>FW</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+        <div class="nav-actions" id="auth-links">
+            <!-- JavaScript handles rendering here -->
+        </div>
+    </nav>
+
+    <header class="hero" style="min-height: 90vh; display: flex; align-items: stretch; padding: 0; margin-top: 70px; background: #fff;">
+        <!-- Left Side: Minimalist Text -->
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 6rem 8%; border-right: 1px solid #f0f0f0;">
+            <span class="hero-subtitle">Mùa Thu Trắng</span>
+            <h1 class="hero-title">Đơn giản<br>Hoàn mỹ</h1>
+            <p class="hero-desc">Định hình phong cách thời trang đương đại với những đường cắt tối giản. Sự sành điệu được làm nên từ chất liệu tinh khiết nhất.</p>
+            
+            <div style="display: flex; gap: 1.5rem;">
+                <a href="products.html" style="background: #111; color: white; text-decoration: none; font-weight: 600; font-size: 1.05rem; padding: 1.3rem 3.5rem; text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s ease;">Khám phá</a>
+            </div>
+        </div>
+
+        <!-- Right Side: Editorial Image -->
+        <div style="flex: 1; height: auto;">
+            <div style="width: 100%; height: 100%; background: url('images/hero_fashion_fresh.png') center/cover no-repeat;"></div>
+        </div>
+    </header>
+
+    <main>
+        <!-- NEW ARRIVALS -->
+        <section id="new-arrivals">
+            <div class="banner" style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('images/new_arrivals_bg.png') center/cover; padding: 12rem 5%; border-radius: 0;">
+                <div class="container" style="text-align: center;">
+                    <h2 style="text-shadow: 0 4px 10px rgba(0,0,0,0.3); font-size: 3.5rem; color: white;">Sản Phẩm Mới Nhất ✨</h2>
+                    <p style="color: white; font-size: 1.3rem; text-shadow: 0 2px 5px rgba(0,0,0,0.5); max-width: 600px; margin: 0 auto;">Đón đầu xu hướng thời trang trẻ thơ với những thiết kế độc quyền mới nhất vừa ra mắt tuần này.</p>
+                    <a href="products.html" class="btn btn-primary" style="margin-top: 2.5rem; background: white; color: #6c5ce7; border: none; font-size: 1.1rem; padding: 1rem 2.5rem;">Cập Nhật Bộ Sưu Tập</a>
+                </div>
+            </div>
+            <div class="container section-padding">
+                <div class="grid-products" id="new-products">
+                    <!-- Fallback/Placeholder while loading -->
+                    <p style="text-align: center; width: 100%;">Đang tải sản phẩm...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOT PRODUCTS: Slider Banner -->
+        <section id="hot-slider" class="hot-bg-slider" style="padding: 16rem 0 20rem 0; margin-top: 4rem; text-align: center;">
+            <div class="container">
+                <h2 style="color: white; font-size: 4.5rem; text-shadow: 0 4px 15px rgba(0,0,0,0.6); margin-bottom: 0.5rem; letter-spacing: 0;">Mặt Hàng Hot 🔥</h2>
+                <p style="color: white; font-size: 1.6rem; text-shadow: 0 2px 8px rgba(0,0,0,0.5); font-weight: 600;">Khám phá những xu hướng bùng nổ nhất tuần này</p>
+            </div>
+        </section>
+
+        <!-- HOT PRODUCTS: Grid Content -->
+        <section id="hot-products" class="container" style="background-color: white; padding: 4rem 3rem; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); position: relative; z-index: 10; margin-top: -160px; margin-bottom: 4rem;">
+            <div class="grid-products" id="hot-products-grid">
+                <!-- JS will populate -->
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="products.html" class="btn btn-outline" style="border-width: 2px; border-color: var(--accent); color: var(--accent); font-weight: 700; padding: 1rem 3rem; font-size: 1.1rem; border-radius: 30px;">XEM TẤT CẢ HOT ITEMS</a>
+            </div>
+        </section>
+
+        <!-- GIRLS COLLECTION -->
+        <section id="girls" style="margin-top: 4rem;">
+            <div class="banner" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('images/banner_girls.png') center/cover; padding: 12rem 5%; border-radius: 0;">
+                <div class="container" style="text-align: center;">
+                    <h2 style="text-shadow: 0 4px 10px rgba(0,0,0,0.3); font-size: 3.5rem; color: white;">Các Cô Nàng Điệu Đà 🎀</h2>
+                    <p style="color: white; font-size: 1.3rem; text-shadow: 0 2px 5px rgba(0,0,0,0.5); max-width: 600px; margin: 0 auto;">Váy công chúa, Phụ kiện xinh xắn dành riêng cho bé gái.</p>
+                    <a href="products.html" class="btn btn-primary" style="margin-top: 2.5rem; background: white; color: #ff6b81; border: none; font-size: 1.1rem; padding: 1rem 2.5rem;">Khám phá ngay</a>
+                </div>
+            </div>
+            <div class="container section-padding">
+                <div class="grid-products" id="girls-products">
+                    <!-- JS will populate -->
+                </div>
+            </div>
+        </section>
+
+        <!-- BOYS COLLECTION -->
+        <section id="boys">
+            <div class="banner" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('images/banner_boys.png') center/cover; padding: 12rem 5%; border-radius: 0;">
+                <div class="container" style="text-align: center;">
+                    <h2 style="text-shadow: 0 4px 10px rgba(0,0,0,0.3); font-size: 3.5rem; color: white;">Bé Trai Cá Tính 😎</h2>
+                    <p style="color: white; font-size: 1.3rem; text-shadow: 0 2px 5px rgba(0,0,0,0.5); max-width: 600px; margin: 0 auto;">Sơ mi, quần jean mạnh mẽ và năng động cho bé trai.</p>
+                    <a href="products.html" class="btn btn-primary" style="margin-top: 2.5rem; background: white; color: #1e90ff; border: none; font-size: 1.1rem; padding: 1rem 2.5rem;">Xem bộ sưu tập</a>
+                </div>
+            </div>
+            <div class="container section-padding">
+                <div class="grid-products" id="boys-products">
+                    <!-- JS will populate -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="background: var(--primary); color: white; padding: 3rem 5%; text-align: center; margin-top: 5rem;">
+        <h2 style="color: white; margin-bottom: 1rem;">LUXE<span>FW</span></h2>
+        <p style="color: #b2bec3;">Nơi thời trang bắt đầu. Tất cả các quyền được bảo lưu &copy; 2026</p>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/products.js"></script>
+    <script>
+        // Fetch products and populate sections
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const res = await fetchAPI('/products');
+                const products = res.data || [];
+                
+                if (products.length > 0) {
+                    // Populate New Arrivals
+                    renderProducts(products.slice(0,4), document.getElementById('new-products'));
+                    
+                    // Populate Hot (Reverse to look different)
+                    const reversed = [...products].reverse();
+                    renderProducts(reversed.slice(0,4), document.getElementById('hot-products-grid'));
+                    
+                    // Populate Girls
+                    renderProducts(products.filter(p => p.name.toLowerCase().includes('gái') || p.name.toLowerCase().includes('dress') || p.categoryId == 3 || p.name.toLowerCase().includes('baby')).slice(0,4), document.getElementById('girls-products'));
+                    
+                    // Populate Boys
+                    renderProducts(products.filter(p => !p.name.toLowerCase().includes('gái') && !p.name.toLowerCase().includes('dress')).slice(0,4), document.getElementById('boys-products'));
+                } else {
+                    document.querySelectorAll('.grid-products').forEach(el => el.innerHTML = '<p style="text-align:center;width:100%;">Trống</p>');
+                }
+            } catch (err) {
+                console.error(err);
+                document.querySelectorAll('.grid-products').forEach(el => el.innerHTML = '<p style="text-align:center;width:100%;color:red;">Lỗi tải sản phẩm</p>');
+            }
+        });
+    </script>
+</body>
+</html>

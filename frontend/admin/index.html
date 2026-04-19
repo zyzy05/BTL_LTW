@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - LUXE FW</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            LUXE<span>ADMIN</span>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item active" onclick="switchTab('dashboard')">
+                <span>📊</span> Tổng quan
+            </li>
+            <li class="nav-item" onclick="switchTab('products')">
+                <span>👕</span> Sản phẩm
+            </li>
+            <li class="nav-item" onclick="switchTab('categories')">
+                <span>📁</span> Danh mục
+            </li>
+            <li class="nav-item" onclick="switchTab('orders')">
+                <span>📦</span> Đơn hàng
+            </li>
+            <li class="nav-item" onclick="switchTab('users')">
+                <span>👥</span> Người dùng
+            </li>
+        </ul>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="main-content">
+        <header class="topbar">
+            <div class="user-profile">
+                <span id="admin-name">Chưa đăng nhập</span>
+                <button class="btn-logout" onclick="logoutAdmin()">Thoát</button>
+            </div>
+        </header>
+
+        <div class="page-wrapper">
+            
+            <!-- DASHBOARD TAB -->
+            <div id="tab-dashboard" class="tab-section active">
+                <h2 class="page-title">Thống kê chung</h2>
+                <div class="data-card">
+                    <p style="color: var(--text-muted); line-height: 1.8;">
+                        Chào mừng hệ thống quản trị LUXE FW.<br>
+                        Vui lòng chọn các mục bên thanh Menu (Sản phẩm, Đơn hàng,...) để bắt đầu quản lý.
+                    </p>
+                </div>
+            </div>
+
+            <!-- PRODUCTS TAB -->
+            <div id="tab-products" class="tab-section">
+                <div class="card-header">
+                    <h2 class="page-title" style="margin:0;">Quản lý Sản phẩm</h2>
+                    <button class="btn-primary" onclick="alert('Tính năng Thêm sản phẩm đang phát triển.')">+ Thêm Sản Phẩm Mới</button>
+                </div>
+                <div class="data-card">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm / Tên</th>
+                                    <th>Giá Niêm Yết</th>
+                                    <th>Danh Mục</th>
+                                    <th>Ngày Tạo</th>
+                                    <th>Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tb-products">
+                                <tr><td colspan="5" style="text-align:center;">Đang tải dữ liệu...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORIES TAB -->
+            <div id="tab-categories" class="tab-section">
+                <div class="card-header">
+                    <h2 class="page-title" style="margin:0;">Quản lý Danh mục</h2>
+                    <button class="btn-primary">+ Thêm Danh Mục</button>
+                </div>
+                <div class="data-card">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên Danh Mục</th>
+                                    <th>Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tb-categories">
+                                <tr><td colspan="3" style="text-align:center;">Đang tải dữ liệu...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ORDERS TAB -->
+            <div id="tab-orders" class="tab-section">
+                <div class="card-header">
+                    <h2 class="page-title" style="margin:0;">Quản lý Đơn hàng</h2>
+                </div>
+                <div class="data-card">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Mã Đơn (#)</th>
+                                    <th>Khách Hàng</th>
+                                    <th>Tổng Tiền</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tb-orders">
+                                <tr><td colspan="5" style="text-align:center;">Đang tải dữ liệu...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- USERS TAB -->
+            <div id="tab-users" class="tab-section">
+                <div class="card-header">
+                    <h2 class="page-title" style="margin:0;">Quản lý Người dùng</h2>
+                </div>
+                <div class="data-card">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Tài Khoản</th>
+                                    <th>Email</th>
+                                    <th>Phân Quyền (Role)</th>
+                                    <th>Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tb-users">
+                                <tr><td colspan="4" style="text-align:center;">Đang tải dữ liệu...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
